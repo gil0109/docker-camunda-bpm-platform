@@ -19,7 +19,7 @@ RUN apk add --no-cache \
 
 COPY settings.xml download_sso.sh camunda-tomcat.sh camunda-wildfly.sh  /tmp/
 
-RUN chmod +rwx download_sso.sh && \
+RUN chmod +rwx /tmp/download_sso.sh && \
   /tmp/download_sso.sh
 
 
