@@ -67,9 +67,10 @@ RUN addgroup -g 1000 -S camunda && \
   adduser -u 1000 -S camunda -G camunda -h /camunda -s /bin/bash -D camunda
 WORKDIR /camunda
 USER camunda
-RUN chmod a+rwx -R /camunda
+
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["./camunda.sh"]
 
 COPY --from=builder /camunda .
+RUN chmod a+rwx -R /camunda
