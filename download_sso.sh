@@ -105,3 +105,4 @@ cp /tmp/jmx_prometheus_javaagent-${JMX_PROMETHEUS_VERSION}.jar /camunda/javaagen
 mvn dependency:copy -B \
     -Dartifact="org.camunda.bpm.extension:camunda-bpm-identity-keycloak:1.2.0:jar" \
     -DoutputDirectory=/camunda/lib
+    
