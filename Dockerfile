@@ -11,11 +11,11 @@ ARG PASSWORD
 ARG JMX_PROMETHEUS_VERSION=0.12.0
 
 RUN apk add --no-cache \
-        ca-certificates \
-        maven \
-        tar \
-        wget \
-        xmlstarlet
+  ca-certificates \
+  maven \
+  tar \
+  wget \
+  xmlstarlet
 
 COPY settings.xml download.sh camunda-tomcat.sh camunda-wildfly.sh  /tmp/
 
@@ -53,22 +53,23 @@ EXPOSE 8080 8000 9404
 # Downgrading wait-for-it is necessary until this PR is merged
 # https://github.com/vishnubob/wait-for-it/pull/68
 RUN apk add --no-cache \
-        bash \
-        ca-certificates \
-        openjdk11-jre-headless \
-        tzdata \
-        tini \
-        xmlstarlet \
-    && wget -O /usr/local/bin/wait-for-it.sh \
-      "https://raw.githubusercontent.com/vishnubob/wait-for-it/a454892f3c2ebbc22bd15e446415b8fcb7c1cfa4/wait-for-it.sh" \
-    && chmod +x /usr/local/bin/wait-for-it.sh
+  bash \
+  ca-certificates \
+  openjdk11-jre-headless \
+  tzdata \
+  tini \
+  xmlstarlet \
+  && wget -O /usr/local/bin/wait-for-it.sh \
+  "https://raw.githubusercontent.com/vishnubob/wait-for-it/a454892f3c2ebbc22bd15e446415b8fcb7c1cfa4/wait-for-it.sh" \
+  && chmod +x /usr/local/bin/wait-for-it.sh
 
 RUN addgroup -g 1000 -S camunda && \
-    adduser -u 1000 -S camunda -G camunda -h /camunda -s /bin/bash -D camunda
+  adduser -u 1000 -S camunda -G camunda -h /camunda -s /bin/bash -D camunda
 WORKDIR /camunda
 USER camunda
+RUN chmod a+rwx -R /camunda
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["./camunda.sh"]
 
-COPY --chown=camunda:camunda --from=builder /camunda .
+COPY --from=builder /camunda .
